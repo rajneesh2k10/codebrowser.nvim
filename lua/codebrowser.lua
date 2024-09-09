@@ -1,3 +1,5 @@
+local M = {}
+
 local config = {
 	base_url = "https://github.com/user/repo/blob/main/",
 }
@@ -46,9 +48,9 @@ local function open_code_in_browser()
 	open_url(url)
 end
 
-local function setup(user_config)
+function M.setup(user_config)
 	config = vim.tbl_extend("force", config, user_config or {})
 	vim.api.nvim_create_user_command("OpenCodeInBrowser", open_code_in_browser, {})
 end
 
-return setup
+return M
