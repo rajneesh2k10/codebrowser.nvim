@@ -1,8 +1,13 @@
 local M = {}
 
 local config = {
-	base_url = "https://github.com/user/repo/blob/main/",
-	line_number_anchor = "#L",
+	urls = {
+		{
+			description = "GitHub",
+			base_url = "https://github.com/",
+			line_number_anchor = "#L",
+		},
+	},
 }
 
 local function open_url(url)
@@ -30,23 +35,55 @@ local function get_relative_file_path()
 	return relative_path
 end
 
-local function construct_url()
+local function construct_url(index)
 	local relative_file_path = get_relative_file_path()
 	if not relative_file_path then
 		return
 	end
 	local line_number = vim.fn.line(".")
-	local url = string.format("%s%s%s%d", config.base_url, relative_file_path, config.line_number_anchor, line_number)
+	local url = string.format(
+		"%s%s%s%d",
+		config.urls[index].base_url,
+		relative_file_path,
+		config.urls[index].line_number_anchor,
+		line_number
+	)
 	return url
 end
 
 local function open_code_in_browser()
-	local url = construct_url()
-	if not url then
-		print("Failed to construct URL")
+	-- If no URLs are configured, print a message and return
+	if #config.urls == 0 then
+		print("No URLs configured")
 		return
 	end
-	open_url(url)
+
+	-- If only one URL is configured, open it and return
+	local url = nil
+	if #config.urls == 1 then
+		url = construct_url(1)
+		open_url(url)
+		return
+	end
+
+	-- If multiple URLs are configured, prompt the user to choose one
+	local choices = {}
+	for i, cfg in iparis(config.urls) do
+		table.insert(choices, { index = i, cfg.description })
+	end
+
+	-- Use vim.ui.select to prompt the user to choose a URL
+	vim.ui.select(choices, {
+		prompt = "Select a URL",
+		format_item = function(choice)
+			return choice.description
+		end,
+	}, function(choice)
+		if choice then
+			url = construct_url(choice.index)
+			open_url(url)
+		end
+	end)
 end
 
 function M.setup(user_config)
