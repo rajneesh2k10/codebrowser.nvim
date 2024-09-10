@@ -2,6 +2,7 @@ local M = {}
 
 local config = {
 	base_url = "https://github.com/user/repo/blob/main/",
+	line_number_anchor = "$",
 }
 
 local function open_url(url)
@@ -35,7 +36,7 @@ local function construct_url()
 		return
 	end
 	local line_number = vim.fn.line(".")
-	local url = string.format("%s%s#L%d", config.base_url, relative_file_path, line_number)
+	local url = string.format("%s%s%s%d", config.base_url, relative_file_path, config.line_number_anchor, line_number)
 	return url
 end
 
