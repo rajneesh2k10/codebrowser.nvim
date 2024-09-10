@@ -2,7 +2,7 @@ local M = {}
 
 local config = {
 	base_url = "https://github.com/user/repo/blob/main/",
-	line_number_anchor = "$",
+	line_number_anchor = "#L",
 }
 
 local function open_url(url)
