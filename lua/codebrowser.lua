@@ -69,7 +69,7 @@ local function open_code_in_browser()
 	-- If multiple URLs are configured, prompt the user to choose one
 	local choices = {}
 	for i, cfg in ipairs(config.urls) do
-		table.insert(choices, { index = i, cfg.description })
+		table.insert(choices, { index = i, description = cfg.description })
 	end
 
 	-- Use vim.ui.select to prompt the user to choose a URL
