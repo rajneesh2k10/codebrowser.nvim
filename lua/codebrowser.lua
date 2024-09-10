@@ -68,7 +68,7 @@ local function open_code_in_browser()
 
 	-- If multiple URLs are configured, prompt the user to choose one
 	local choices = {}
-	for i, cfg in iparis(config.urls) do
+	for i, cfg in ipairs(config.urls) do
 		table.insert(choices, { index = i, cfg.description })
 	end
 
