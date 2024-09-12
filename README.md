@@ -15,12 +15,12 @@
                 {
                     description = "GitHub",
                     base_url = "https://github.com/your_username/your_repo/blob/main/",
-                    anchor = "#L" -- GitHub line anchor
+                    line_number_anchor = "#L" -- GitHub line anchor
                 },
                 {
                     description = "GitLab",
                     base_url = "https://gitlab.com/your_username/your_repo/-/blob/main/",
-                    anchor = "#n" -- GitLab line anchor
+                    line_number_anchor = "#n" -- GitLab line anchor
                 }
                 -- Add more configurations as needed
             }
